@@ -1,5 +1,5 @@
 const Article = require('../models/newsArticle');
-const asyncWrapper = require('../middelware/async')
+const asyncWrapper = require('../middelware/async');
 
 const getAllArticles = asyncWrapper(async (req, res) => {
     const articles = await Article.find({})
@@ -17,8 +17,7 @@ const getArticle = asyncWrapper(async (req, res, next) => {
         if(!singleArticle){
             const error = new Error('Not Found')
             error.status = 404
-            return next(error)
-            // return res.status(404).json({ msg: `No Article in ${articleID}`});
+            return next(error);
         }
     res.status(200).json({singleArticle});  
 })
