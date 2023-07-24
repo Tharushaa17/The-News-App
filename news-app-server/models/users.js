@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: false,
-        max: 40,
+        min: 3,
         max: 150,
     },
 
@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: false,
-        min: 40,
+        min: 3,
         max: 150,
     },
 
