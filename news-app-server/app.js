@@ -5,10 +5,11 @@ const connectDB = require('./db/connect');
 require('dotenv').config();
 const notFound = require('./middelware/not-found');
 const errorHandler = require('./middelware/error-handler');
-
+const cors = require('cors');
 // middelware
 app.use(express.static('./public'));
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
 // routes
 app.use('/api/v1/today', theNews);
