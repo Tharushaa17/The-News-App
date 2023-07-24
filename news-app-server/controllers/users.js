@@ -7,6 +7,16 @@ const getAllUsers = asyncWrapper(async (req, res) => {
     res.status(200).json({ users })
 })
 
+const loginUser = asyncWrapper(async (req, res) => {
+    const username = await Users.findOne({ email : req.body.email});
+    if(!username) return res.status(400).send('Email or Password not matched!');
+
+    const password = await bcrypt.compare(req.body.password, username.password);
+    if(!password) return res.status(400).send('Email or Password not matched!');
+
+    res.send('Loggedin Successfully!')
+})  
+
 const createUser = asyncWrapper(async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -53,5 +63,5 @@ const deleteUser = asyncWrapper(async(req, res) => {
 })
 
 module.exports = {
-    getAllUsers,createUser,getUser,updateUser,deleteUser
+    getAllUsers,createUser,getUser,updateUser,deleteUser,loginUser
 }
