@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../action/user';
+import { useNavigate } from 'react-router-dom'
 import './Register.css';
 
 const Register = () => {
@@ -9,6 +10,9 @@ const Register = () => {
     first_name:"",last_name:"", email: "", password: "", image: ""
   }); 
 
+  const msg = useSelector((state) => state.user.msg);
+  console.log(useSelector((state) => state.user.msg));
+
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -16,6 +20,11 @@ const Register = () => {
     dispatch(createUser(userData))
   }
 
+  const navigate = useNavigate();
+
+  const gotoLogin = () =>{
+    navigate('/Loggin');
+  }
   return (
     <div className='container' style={{ marginTop: '100px'}}>
         <div className="row align-items-center">
@@ -25,6 +34,7 @@ const Register = () => {
                         <div className='mx-auto col-lg-9'>
                             <div><br></br></div>
                                 <h1 className='text-center'  style={{  color : "#29335c"}}>User Registration..</h1>
+                                <h4>{msg}</h4>
                             <div><br></br></div>
                             <div className="form-row d-flex">
                                 <div className="form-group col-lg-6">
@@ -65,11 +75,11 @@ const Register = () => {
                             <div className="or-container"><div className="line-separator"></div> <div className="or-label">or</div><div className="line-separator"></div></div>
                             <div className="row">
                                 <div className="col-md-12 text-center">
-                                  <a className="btn btn-lg btn-google btn-block btn-outline" href='3'><img alt='google-logo' src="https://img.icons8.com/color/16/000000/google-logo.png"/>&nbsp; Signup Using Google</a>
+                                  <a className="btn btn-lg btn-google btn-block btn-outline" href='3'><img alt='' src="https://img.icons8.com/color/16/000000/google-logo.png"/>&nbsp; Signup Using Google</a>
                                 </div>
                             </div>
                             <br/>
-                            <p className="text-inverse text-center">Already have an account ? <a href='3' data-abc="true">Login</a></p>
+                            <p className="text-inverse text-center">Already have an account ? <button class="btn btn-link" onClick={gotoLogin} data-abc="true">Login</button></p>
                         </div>
                     </div>
                 </form>
