@@ -28,7 +28,8 @@ const createUser = asyncWrapper(async (req, res) => {
         password : hashedPassword
     })
     const user = await Users.create(register);
-    res.status(201).json({user});
+    res.status(201).send('User Registered Successfully!');
+    console.log('hit');
 })
 
 const getUser = asyncWrapper(async (req, res, next) => {

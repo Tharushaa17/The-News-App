@@ -7,6 +7,8 @@ import Login from './components/Login';
 import CreateFeed from './components/CreateFeed';
 import './App.css'
 import { FaBars, FaTimes } from "react-icons/fa";
+import { Provider } from 'react-redux';
+import store from './store';
 
 const App = () => {
   const navRef = useRef();
@@ -33,13 +35,15 @@ const App = () => {
           <FaBars />
 			  </button>
       </header>
+      <Provider store={store}>
         <Routes>
               <Route path="/" index element={<Feeds/>}/>
               <Route path="/Profile" element={<MyProfile/>}/>
               <Route path="/Register" element={<Register/>}/>
               <Route path="/Loggin" element={<Login/>}/>
               <Route path="/CreateFeed" element={<CreateFeed/>}/>
-        </Routes>   
+        </Routes> 
+      </Provider>  
     </>
   )
 }

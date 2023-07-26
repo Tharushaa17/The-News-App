@@ -6,6 +6,7 @@ require('dotenv').config();
 const notFound = require('./middelware/not-found');
 const errorHandler = require('./middelware/error-handler');
 const cors = require('cors');
+
 // middelware
 app.use(express.static('./public'));
 app.use(cors());
