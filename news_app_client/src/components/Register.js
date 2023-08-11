@@ -6,12 +6,11 @@ import './Register.css';
 
 const Register = () => {
 
+  const successMessage = useSelector(state => state.user.successMessage);
+    
   const [userData, setUserData] = useState({
     first_name:"",last_name:"", email: "", password: "", image: ""
   }); 
-
-  const msg = useSelector((state) => state.user.msg);
-  console.log(useSelector((state) => state.user.msg));
 
   const dispatch = useDispatch();
 
@@ -34,7 +33,7 @@ const Register = () => {
                         <div className='mx-auto col-lg-9'>
                             <div><br></br></div>
                                 <h1 className='text-center'  style={{  color : "#29335c"}}>User Registration..</h1>
-                                <h4>{msg}</h4>
+                                <h4>{successMessage}</h4>
                             <div><br></br></div>
                             <div className="form-row d-flex">
                                 <div className="form-group col-lg-6">
@@ -79,7 +78,7 @@ const Register = () => {
                                 </div>
                             </div>
                             <br/>
-                            <p className="text-inverse text-center">Already have an account ? <button class="btn btn-link" onClick={gotoLogin} data-abc="true">Login</button></p>
+                            <p className="text-inverse text-center">Already have an account ? <button className="btn btn-link" onClick={gotoLogin} data-abc="true">Login</button></p>
                         </div>
                     </div>
                 </form>
