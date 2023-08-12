@@ -1,6 +1,7 @@
 const Users = require('../models/users');
 const asyncWrapper = require('../middelware/async');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 const getAllUsers = asyncWrapper(async (req, res) => {
     const users = await Users.find({})
@@ -8,13 +9,18 @@ const getAllUsers = asyncWrapper(async (req, res) => {
 })
 
 const loginUser = asyncWrapper(async (req, res) => {
-    const username = await Users.findOne({ email : req.body.email});
-    if(!username) return res.status(400).send('Email or Password not matched!');
-
-    const password = await bcrypt.compare(req.body.password, username.password);
-    if(!password) return res.status(400).send('Email or Password not matched!');
-
-    res.send('Loggedin Successfully!')
+    const user = await Users.findOne({ email : req.body.email});
+    if(!user) {
+        return res.status(400).send('Please Enter valid Email!');
+    }else{
+        const authentication = await bcrypt.compare(req.body.password, user.password);
+        if(!authentication) {
+            return res.status(400).send('Email or Password not matched!');
+        }else{
+            const token = jwt.sign({ _id : user._id }, process.env.SECRET_KEY )
+            res.header('auth-token', token).json({token, user, authStatus: true })
+        }
+    }
 })  
 
 const createUser = asyncWrapper(async (req, res) => {
@@ -29,7 +35,6 @@ const createUser = asyncWrapper(async (req, res) => {
     })
     const user = await Users.create(register);
     res.status(201).send('User Registered Successfully!');
-    console.log('hit');
 })
 
 const getUser = asyncWrapper(async (req, res, next) => {

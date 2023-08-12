@@ -6,16 +6,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: false,
-        min: 3,
-        max: 150,
     },
 
     last_name: {
         type: String,
         required: true,
         trim: false,
-        min: 3,
-        max: 150,
     },
 
     email:{
@@ -30,6 +26,11 @@ const UserSchema = new mongoose.Schema({
 
     image: {
         type: String,
+    },
+
+    userRole: {
+        type: Number,
+        default : 1,
     },
 
     createdAt: {

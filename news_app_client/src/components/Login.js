@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logginUser } from '../action/user';
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-    const [userData, setUserData] = useState({
+    const successMessage = useSelector(state => state.user.successMessage);
+    const user = useSelector(state => state.user.user);
+
+  const [userData, setUserData] = useState({
      email: "", password: ""
   }); 
 
@@ -20,6 +23,7 @@ const Login = () => {
   const gotoRegister = () =>{
     navigate('/Register');
   }
+
   return (
     <div className='container' style={{ marginTop: '100px'}}>
         <div className="row align-items-center">
