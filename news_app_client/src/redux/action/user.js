@@ -32,7 +32,6 @@ export const createUser = (newUser) => async (dispatch) => {
   try {
     const response = await axios.post(urlRegister, newUser);
     dispatch(createUserSuccess(response.data));
-    // window.location.href = '/Register';
   } catch (error) {
     dispatch(createUserFailure(error.message));
   }
@@ -42,8 +41,7 @@ export const logginUser = (user) => async (dispatch) => {
   try {
     const response = await axios.post(urlLoggin , user)
     dispatch(loginUserSuccess(response.data));
-    // window.location.href = '/Loggin';
   } catch (error) {
-    console.log(error.message);
+    dispatch(loginUserFailure(error.message));
   }
 }
