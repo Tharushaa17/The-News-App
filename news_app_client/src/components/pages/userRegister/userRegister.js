@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from '../../redux/action/user';
 import { useNavigate } from 'react-router-dom'
-import './Register.css';
+import './userRegister.css';
+import { createUser } from '../../../api/registerAPI';
 
 const Register = () => {
 

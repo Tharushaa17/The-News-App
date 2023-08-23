@@ -1,6 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom'
 
 const Feeds = () => {
+
+  const navigate = useNavigate();
+  
+  const fullFeed = () => {
+    navigate('/')
+  }
   return (
     <div className='container' style={{ marginTop: '100px'}}>
     <div className="row align-items-center">
@@ -10,8 +17,8 @@ const Feeds = () => {
                     <p>colombo</p>
                   </div>
                   <hr></hr>
-                <div className='col-lg-9'>
-                <img className="card-img-top" src="..." alt="image"/>
+                <div className="col-lg-9 w-100">
+                <img className="card-img-top" src="..." alt="thumbnail_image"/>
                   <div className="card-body">
                     <div>
                       <p>Publisher</p>
@@ -22,7 +29,7 @@ const Feeds = () => {
                      when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic 
                      typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
                       desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <a href="" className="btn btn-light">Readmore ..</a>
+                    <button className="btn btn-light" onClick={ fullFeed() }>Readmore ..</button>
                   </div>
                 </div>   
             </div>

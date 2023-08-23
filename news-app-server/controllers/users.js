@@ -9,15 +9,16 @@ const getAllUsers = asyncWrapper(async (req, res) => {
 })
 
 const loginUser = asyncWrapper(async (req, res) => {
-    const user = await Users.findOne({ email : req.body.email});
-    if(!user) {
+    const userInfo = await Users.findOne({ email : req.body.email});
+    if(!userInfo) {
         return res.status(400).send('Please Enter valid Email!');
     }else{
-        const authentication = await bcrypt.compare(req.body.password, user.password);
+        const authentication = await bcrypt.compare(req.body.password, userInfo.password);
         if(!authentication) {
             return res.status(400).send('Email or Password not matched!');
         }else{
-            const token = jwt.sign({ _id : user._id }, process.env.SECRET_KEY )
+            const token = jwt.sign({ _id : userInfo._id }, process.env.SECRET_KEY, { expiresIn : '5min' } )
+            const { password, ...user } = Object.assign({}, userInfo.toJSON());
             res.header('auth-token', token).json({token, user, authStatus: true })
         }
     }
