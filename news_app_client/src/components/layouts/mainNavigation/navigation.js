@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './navigation.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../redux/action/actionCreators';
+import { persistor } from '../../../redux/store';
 
 const MainNavigation = () => {
   const authentication = useSelector(state => state.userReducer);
@@ -11,6 +13,13 @@ const MainNavigation = () => {
 
   const toggleNavbar = () => {
     setIsNavOpen(prevState => !prevState);
+  };
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    persistor.purge();
   };
 
   return (
@@ -45,6 +54,7 @@ const MainNavigation = () => {
           }
           
           <Link to="/CreateFeed" onClick={toggleNavbar} >Add New Article</Link>
+
           <button className="nav-btn nav-close-btn" onClick={toggleNavbar}>
             <FaTimes />
           </button>
@@ -52,6 +62,7 @@ const MainNavigation = () => {
         <button className="nav-btn" onClick={toggleNavbar}>
           <FaBars />
         </button>
+        <button className='nav-user' onClick={handleLogout}>User</button>
       </header>
     </>
   );
