@@ -7,7 +7,18 @@ import { logout } from '../../../redux/action/actionCreators';
 import { persistor } from '../../../redux/store';
 
 const MainNavigation = () => {
-  const authentication = useSelector(state => state.userReducer);
+  const authentication = useSelector(state => state.userReducer.user);
+
+  let initialState = false;
+  let userLevel;
+
+    if(authentication === null || authentication === undefined){
+      initialState = true;
+    }else if(authentication.user === null && authentication.error !== null){
+      initialState = true;
+    }else if(authentication.token){
+      userLevel = authentication.user.userRole;
+    }
 
   const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -28,33 +39,11 @@ const MainNavigation = () => {
         <h1>
           <h4>THE</h4>NEWS
         </h1>
-        <nav className={isNavOpen ? 'responsive_nav' : ''}>
+        <nav style={{ 'alignItems': 'center' }} className={isNavOpen ? 'responsive_nav' : ''}>
           <Link to="/" onClick={toggleNavbar} >Feeds</Link>
           <Link to="/Profile" onClick={toggleNavbar} >My Profile</Link>
-          {
-                  authentication.user === null && authentication.error === null 
-              ? 
-                  (
-                    <Link to="/Register" onClick={toggleNavbar} >Create Profile</Link>
-                  ) 
-              : 
-                  authentication.error === null && authentication.user.authStatus === true 
-              ? 
-                  ( 
-                    <></>
-                  ) 
-              :
-                  authentication.user === null && authentication.error !== null 
-              ?
-                (
-                  <Link to="/Register" onClick={toggleNavbar} >Create Profile</Link>
-                ) 
-              :
-                  null
-          }
-          
-          <Link to="/CreateFeed" onClick={toggleNavbar} >Add New Article</Link>
-
+          { initialState === true ? ( <Link to="/Register" onClick={toggleNavbar} >Create Profile</Link> ) : ( <></> ) }
+          { userLevel === 3 ? ( <Link to="/CreateFeed" onClick={toggleNavbar} >Add New Article</Link> ) : ( <></> ) }
           <button className="nav-btn nav-close-btn" onClick={toggleNavbar}>
             <FaTimes />
           </button>
@@ -62,7 +51,7 @@ const MainNavigation = () => {
         <button className="nav-btn" onClick={toggleNavbar}>
           <FaBars />
         </button>
-        <button className='nav-user' onClick={handleLogout}>User</button>
+        { initialState === false ? ( <button className='nav-user' onClick={handleLogout}> {authentication.user.first_name} {authentication.user.last_name} </button> ) : ( <></> ) }  
       </header>
     </>
   );

@@ -6,7 +6,7 @@ import { createUser } from '../../../api/registerAPI';
 
 const Register = () => {
 
-  const successMessage = useSelector(state => state.userReducer.user);
+    const authentication = useSelector(state => state.userReducer);
     
   const [userData, setUserData] = useState({
     first_name:"",last_name:"", email: "", password: "", image: ""
@@ -24,6 +24,11 @@ const Register = () => {
   const gotoLogin = () =>{
     navigate('/Loggin');
   }
+
+  const gotoFeeds = () =>{
+    navigate('/')
+} 
+
   return (
     <div className='container' style={{ marginTop: '100px'}}>
         <div className="row align-items-center">
@@ -31,9 +36,39 @@ const Register = () => {
                 <form autoComplete='off' noValidate onSubmit={handleSubmit}>
                     <div className="card">
                         <div className='mx-auto col-lg-9'>
+                        {
+                                    authentication.user === null && authentication.error !== null 
+                                ? 
+                                    (
+                                        <div className="alert alert-danger" style={{ textAlign: 'center' }} role="alert">
+                                            Sorry! Username or Password not matched
+                                        </div>
+                                    ) 
+                                : 
+                                    authentication.error === null && authentication.user !== null 
+                                ? 
+                                    (
+                                        <div className="alert alert-success" style={{ textAlign: 'center' }} role="alert">
+                                            You are Successfully Logged in!
+                                        </div>
+                                    )
+                                : 
+                                    null
+                            }
+
+                            {
+                                    authentication.error === null && authentication.user !== null 
+                                ? 
+                                    (
+                                        setTimeout(() => {  gotoFeeds() }, 1500)
+                                    )
+                                : 
+                                    null
+                            }
+
                             <div><br></br></div>
                                 <h1 className='text-center'  style={{  color : "#29335c"}}>User Registration..</h1>
-                                <h4>{successMessage}</h4>
+                                
                             <div><br></br></div>
                             <div className="form-row d-flex">
                                 <div className="form-group col-lg-6">

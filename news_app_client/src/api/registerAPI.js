@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createUserFailure, createUserSuccess } from "../redux/action/actionCreators";
 
-const urlRegister = `${process.env.BASE_URL}/singup`;
+const urlRegister = `${process.env.REACT_APP_BASE_URL}/singup`;
 
 export const createUser = (newUser) => async (dispatch) => {
     try {
