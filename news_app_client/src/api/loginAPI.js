@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { loginUserFailure, loginUserSuccess } from '../redux/action/actionCreators';
 
-const urlLoggin = `${process.env.BASE_URL}/login`;
+const urlLoggin = `${process.env.REACT_APP_BASE_URL}/login`;
 
 export const logginUser = (user) => async (dispatch) => {
     try {
